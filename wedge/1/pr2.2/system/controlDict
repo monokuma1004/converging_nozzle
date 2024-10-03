@@ -1,0 +1,119 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     4.0                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     dbnsurbFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         0.0132768;
+
+deltaT          1e-07;
+
+writeControl    runTime;
+
+writeInterval   1000;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression on;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+adjustTimeStep  no;
+
+maxCo           2.5;
+
+maxDeltaT       1;
+
+functions
+{
+    writeFields
+    {
+        type            writeObjects;
+        libs            ("libutilityFunctionObjects.so");
+        writeControl    adjustableRunTime;
+	writeInterval   1e-04;
+
+        objects
+        (
+            rho
+	    p
+	    T
+	    U
+        );
+    }
+
+
+    screech1000kHz
+    {
+        type            probes;
+        libs ("libsampling.so");
+        enabled         true;
+        writeControl    timeStep;            // 修正: outputControl -> writeControl
+        writeInterval   1;
+
+        // Probe locations
+        probeLocations
+        (
+	(-0.03 0.02 0)
+        (-0.03 0.06 0)
+	(-0.02 0.04 0)
+	(0 0.00642 0)
+	(0 0.02 0)
+        (0 0.06 0)
+ 	(0.02 0.01 0)
+        (0.03 0 0)
+	(0.04 0.018 0)
+	(0.05 0.02 0)
+	(0.06 0.01 0)
+	(0.08 0.02 0)
+        (0.1 0.03 0)
+	(0.12 0.01 0)
+	(0.15 0.03 0)
+	(0.18 0.03 0)
+	(0.2 0.04 0)
+        (0.22 0.02 0)
+	(0.25 0.04 0)
+	(0.28 0.04 0)
+	(0.30 0.05 0)
+	(0.34 0.05 0)
+        (0.35 0.06 0)
+	);
+
+        // Fields to be probed
+        fields
+        (
+            p      // Pressure
+            //U      // Velocity
+        );
+    }
+
+
+
+}

@@ -1,0 +1,47 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2312                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      sample;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+type            sets;
+libs            ("libsampling.so");   // サンプリングライブラリ
+interpolationScheme cellPointFace;
+
+fields          ( p );                // 圧力フィールドのみサンプリング
+
+sets
+{
+    centerline_raw
+    {
+        type    lineUniform;
+        axis    x;                   // x軸に沿ってサンプリング
+        start   (0 0 0);             // サンプリングの開始点
+        end     (0.4 0 0);           // サンプリングの終了点
+        nPoints 92;                  // サンプリングポイントの数
+        setFormat raw;               // raw形式での出力
+    }
+
+    centerline_csv
+    {
+        type    lineUniform;
+        axis    x;                   // x軸に沿ってサンプリング
+        start   (0 0 0);             // サンプリングの開始点
+        end     (0.4 0 0);           // サンプリングの終了点
+        nPoints 92;                  // サンプリングポイントの数
+        setFormat csv;               // csv形式での出力
+    }
+}
+
+
+// ************************************************************************* //
